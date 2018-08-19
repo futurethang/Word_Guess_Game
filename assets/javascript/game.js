@@ -1,28 +1,50 @@
 let game = {
     // GAME CONDITION OPERATORS
-    "gameOver" : true,
-    "gameWon" : false,
+    gameOver: true,
+    gameWon: false,
 
-    "answers" : [
+    answers: [
         "Wyatt Earp",
         "Billy the Kid",
         "Buffalo Bill",
         "Butch Cassidy",
         "Bill Pickett",
         "Dalton Gang",
-        "Doc Holliday"
+        "Doc Holliday",
+        "TESTING TESTING"
     ],
 
-    "setGame" : function() {
+    setGame: function(input) {
         this.answerZone = [];
+        let randomPick = this.answers[Math.floor(Math.random()*this.answers.length)];
+        return randomPick;
         // randomly select string from "answers" array;
         // convert string to array;
     },
 
-    "analyzeEntry" : function(input) {
+    analyzeEntry: function(input) {
         // check the user input to match within an updated answer array
         // do not permit and send message for already correct guesses
-        // append the answer array or the wrong guesses array
+        // conditional that determines whether to run correctGuess() or incorrectGuess() with input
+    },
+
+    correctGuess: function() {
+        // what to do when the guess is right. write to the answeZone
+        // called from analyzeEntry()
+    },
+
+    incorrectGuess: function() {
+        // what to do when the answer is wrong
+        // called from analyzeEntry()
+    },
+
+    //TEST FUNCTIONS
+    testFunc1: function() {
+        return "this is a test";
+    },
+
+    testFunc2: function() {
+        return 1234;
     },
 
     // TEXT FORMATTING FUNCTIONS:
@@ -72,14 +94,9 @@ document.onkeyup = function(event) {
     game.newGuess = userInput
     console.log("newGuess set to: " + game.newGuess);
 
-    //COORECT GUESSES
-    // writing to answerZone   -  update to run function to check for correct, only push to array if incorrect
+    //CORRECT GUESSES
+    // writing to answerZone - update to run function to check for correct
     game.analyzeEntry(userInput);
-
-
-    game.answerZone.push(userInput.toUpperCase());
-    console.log("answerZone state: " + game.answerZone)
-
 
     // COUNTER
     // for each onkeyup guess that is WRONG, iterate down
@@ -95,5 +112,10 @@ document.onkeyup = function(event) {
 
     // WRITE TO HTML DURING GAMEPLAY
     html_wrong_guesses.textContent = game.answerZone; // change to format not as an array
-    html_attemptsRemaining.textContent = game.attempts; 
+    // html_attemptsRemaining.textContent = game.attempts; 
+    game.answerZone.push(userInput.toUpperCase());
+    console.log("answerZone state: " + game.answerZone);
+    let test = game.setGame();
+    html_attemptsRemaining.textContent = test; 
+
 }
