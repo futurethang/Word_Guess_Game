@@ -1,0 +1,58 @@
+
+
+PSUEDO CODE -------------
+
+Initial visuals:
+
+- HEADER   - go for an old west theme "Dead Cowboys"
+
+- PRESS KEY TO START GAME   #game_start
+
+- GUESSING AREA -   #answer_zone
+	UNDERSCORES FOR THE NUMBER OF LETTERS IN THE ANSWER
+	TRY TO SPACE EVENLY, MAYBE USE A MONOSPACE FONT
+	LARGE SIZE
+
+- NUMBER OF ATTEMPTS LEFT   #attempts_remaining
+	LATER MAKE A HANGMAN DRAWING
+
+- LIST OF GUESSED ANSWERS   #wrong_guesses
+
+
+
+Initial game code:
+
+
+VARIABLES:
+
+let answer = an array generated from a string?
+
+let answerZone = and array that begins with underscores and replaces with correct guesses when a match is made
+
+let newGuess = a key event
+
+let guessMatch = a function that checks the answer array for a match to newGuess
+
+let attempts = a counter from 13 down
+
+let wrongGuesses = an array
+
+
+
+Order of problems to solve:
+
+Send the return values to the HTML placeholders
+
+Set up the onkey event to store in variable to use in other functions and displays
+
+Check answers against an array that holds the answer
+
+Push wrong guesses into a separate array
+
+Increment game counter
+
+Game reset function
+
+Convert an answer string to an answer array
+
+Somehow iterate over the answer and guess arrays to generate HTML elements so the placeholder responds and displays answers of different lengths
