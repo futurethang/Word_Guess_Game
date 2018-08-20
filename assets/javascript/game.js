@@ -116,7 +116,12 @@ let game = {
         //can convert any array to a display string, both answers and guesses
     },
 
-    stringToArray: function() {
+    stringToArray: function(str) {
         // used to set the random answer selection to an array the game can use
+        
+        console.log("STRING TO ARRAY FIRE: BEFORE FUNC: " + str);
+        console.log("STRING TO ARRAY FIRE: AFTER FUNC: " + str.split(""));
+        game.answerZone = str.toUpperCase().split("");
+        console.log("ANSWER ZONE: " + this.answerZone);
     },
 }
