@@ -21,12 +21,11 @@ let game = {
     // the parts that write to the HTML
     answerZone: [], // WHERE CORRECT ANSWERS ARE WRITTEN TO THE DOM
     wrongGuesses: [], // WHERE INCORRECT ANSWERS ARE WRITTEN TO THE DOM
+    
+    // GAMEPLAY VARIABLES
+    userInput: "",
     attempts: 13, // ITERATES DOWNWARD TOWARDS GAME OVER TRIGGER
     answerSpace: [], // WHERE THE ARRAY VERSION OF THE COWBOY NAME IS STORED FOR REFERENCE
-
-    // GAMEPLAY VARIABLES
-    newGuess: "", //onkey event
-    userInput: "",
 
     answers: [
         "Wyatt Earp",
@@ -84,7 +83,7 @@ let game = {
             
             // SETTING USER INPUT
             game.userInput = event.key.toUpperCase();
-            console.log("newGuess set to: " + game.userInput);
+            console.log("userInput set to: " + game.userInput);
         
             // ANALYZE GUESSES
             // writing to answerZone - update to run function to check for correct
@@ -126,22 +125,26 @@ let game = {
     },
 
     // TEXT FORMATTING FUNCTIONS:
-    arrayToString: function() {
+    arrayToString: function(arr) {
         //can convert any array to a display string, both answers and guesses
+        arr = arr.join("");
     },
 
     stringToArray: function(str) {
         // used to set the random answer selection to an array the game can use
-        console.log("STRING TO ARRAY FIRE: BEFORE FUNC: " + str);
+        // console.log("STRING TO ARRAY FIRE: BEFORE FUNC: " + str);
         
         game.answerZone = str.toUpperCase().split("");
         for (let i = 0 ; i < this.answerZone.length ; i++) {
             game.answerSpace.push("_");
         };
-        console.log("STRING TO ARRAY FIRE: AFTER FUNC: " + game.answerZone);
-        console.log("ANSWER ZONE: " + this.answerZone.length);
-        console.log("ANSWER SPACE: " + this.answerSpace.length);
+
+        // console.log("STRING TO ARRAY FIRE: AFTER FUNC: " + game.answerZone);
+        // console.log("ANSWER ZONE: " + this.answerZone.length);
+        // console.log("ANSWER SPACE: " + this.answerSpace.length);
     },
 
     // BOOLEAN CHECK FUNCTIONS FOR ALREADY GUESSED LETTERS, BOTH CORRECT AND INCORRECT
+
+    // CHECK WIN STATE - A FUNCTION TO RUN AT THE END OF ANALYZE TO DETERMINE A COMPLETE ANSWER, AND ALSO TRIGGER THE GAME OVER STATE.
 }
