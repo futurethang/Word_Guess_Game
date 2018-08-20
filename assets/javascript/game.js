@@ -15,10 +15,6 @@ document.getElementById("game_start").onclick = function() {
 }
 
 let game = {
-    // GAME CONDITION OPERATORS
-    gameOver: true,
-    gameWon: false,
-
     // the parts that write to the HTML
     answerZone: [], // WHERE CORRECT ANSWERS ARE WRITTEN TO THE DOM !!! ONLY FOR DOM JUST BEFORE WRITE !!!
     wrongGuesses: [], // WHERE INCORRECT ANSWERS ARE WRITTEN TO THE DOM
@@ -40,14 +36,12 @@ let game = {
     ],
 
     setGame: function() {
-
         let randomPick = this.answers[Math.floor(Math.random()*this.answers.length)];
         this.answerSpace = [];
         this.answerZone = [];
         this.stringToArray(randomPick);
         this.attempts = 9;
         this.wrongGuesses = [];
-        this.gameOver = false;
         html_startButton.style = show;
         html_answer_zone.textContent = game.arrayToString(game.answerZone);
         html_wrong_guesses.textContent =  game.arrayToString(game.wrongGuesses);
@@ -61,8 +55,7 @@ let game = {
     },
 
     stringToArray: function(str) {
-        // used to set the random answer selection to an array the game can use
-        // console.log("STRING TO ARRAY FIRE: BEFORE FUNC: " + str);
+        // used to set the random answer selection to an array the game can use.
         console.log("string to array before: " + str);
         game.answerSpace = str.toUpperCase().replace(" ", "_").split("");
         console.log(game.answerSpace);
@@ -95,15 +88,12 @@ let game = {
             html_bad_guess_alert.style = show;
         }
         
-        
         // check the user input to match within an updated answer array
         // do not permit and send message for already correct guesses
         // conditional that determines whether to run correctGuess() or incorrectGuess() with input
     },
 
     correctGuess: function(indices) {
-        // what to do when the guess is right. write to the answeZone
-        // called from analyzeEntry()
         if (game.alreadyCorrect(game.userInput)) {
             html_bad_guess_alert.textContent = "Ya got that one already, pardner.";
             html_bad_guess_alert.style = show;
@@ -115,10 +105,7 @@ let game = {
     },
 
     incorrectGuess: function(val) {
-        // what to do when the answer is wrong
-        // called from analyzeEntry()
         if (game.alreadyWrong(val)) {
-            //  HTML variable write to hidden alert box
             html_bad_guess_alert.textContent = "Wrong again, lil' doggie.";
             html_bad_guess_alert.style = show;
         } else {
@@ -128,14 +115,13 @@ let game = {
     },
 
     badGuess: function(val) {
-        // check the userinput for non-alpha entry !ONLY!
+        // CHECK THE USER INPUT FOR ALPHA ENTRY, REJECT OTHER
         if (val.length === 1 && val.match(/[a-z]/i)) {
             return true;
         } else {return false;}
     },
 
-    // BOOLEAN CHECK FUNCTIONS FOR ALREADY GUESSED LETTERS, BOTH CORRECT AND INCORRECT
-
+    // BOOLEAN CHECK FUNCTIONS FOR ALREADY GUESSED LETTERS
     alreadyCorrect: function(val) {
         return game.answerZone.includes(val);
     },
@@ -201,8 +187,6 @@ let game = {
 };
 
 // REMAINING PROJECT GOALS:
-
-// TRIGGER GAME ACTIVE AND END STATES WITH FULL RESET, MAYBE EVEN A GAME WINS COUNTER WITH DEDICATED RESET
 
 // ADD A GAME WINNING MESSAGE WHEN CORRECT
 
