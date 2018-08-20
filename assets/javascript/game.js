@@ -20,6 +20,15 @@ let game = {
     gameOver: true,
     gameWon: false,
 
+    // the parts that write to the HTML
+    answerZone: [],
+    wrongGuesses: [],
+    attempts: 13,
+
+    // GAMEPLAY VARIABLES
+    newGuess: "", //onkey event
+    userInput: "",
+
     answers: [
         "Wyatt Earp",
         "Billy the Kid",
@@ -48,49 +57,43 @@ let game = {
     },
 
     runGame: function() {
+        html_startButton.style = button_hide;
+        console.log(this.gameOver);
+        console.log("TESTING RUNGAME FIRE");
         
-            console.log(this.gameOver);
-            console.log("TESTING FUNCTION FIRE");
+        // this.gameOver = true;
+        
+        document.onkeyup = function(event) {
             
-            // this.gameOver = true;
-            
-                document.onkeyup = function(event) {
-
-                    // while (game.gameOver === false) {
-                        // run the game until GAMEOVER fires on a win or a loss
-                        // then pause and bring back a GAME RESET button
-                    html_startButton.style = button_hide;
-                    
-                    // SETTING USER INPUT
-                    game.userInput = event.key;
-                    console.log("newGuess set to: " + game.userInput);
-                
-                    // ANALYZE GUESSES
-                    // writing to answerZone - update to run function to check for correct
-                    game.analyzeEntry(game.userInput);
-                    // Function triggers other functions to handle correct and incorrect cases and set arrays
-                
-                    // COUNTER
-                    // for each onkeyup guess that is WRONG, iterate down
-                    // add conditional to increment only for incorrect guesses
-                    game.attempts--;
-                    console.log(game.attempts);
-                
-                    // GAME OVER 
-                    if (game.attempts == 0) {
-                    game.gameOver = true;
-                    alert("Yer days are numbered, Cowgirl.");
-                    game.setGame();
-                    }
-            
-                    // WRITE TO HTML DURING GAMEPLAY
-                    html_wrong_guesses.textContent = game.wrongGuesses; // change to format not as an array
-                    // html_attemptsRemaining.textContent = game.attempts; 
-                    game.wrongGuesses.push(game.userInput.toUpperCase());
-                    console.log("wrongGuesses state: " + game.wrongGuesses);
-                    // let test = game.setGame();
-                    html_attemptsRemaining.textContent = game.attempts; 
-            // }
+            // SETTING USER INPUT
+            game.userInput = event.key;
+            console.log("newGuess set to: " + game.userInput);
+        
+            // ANALYZE GUESSES
+            // writing to answerZone - update to run function to check for correct
+            game.analyzeEntry(game.userInput);
+            // Function triggers other functions to handle correct and incorrect cases and set arrays
+        
+            // COUNTER
+            // for each onkeyup guess that is WRONG, iterate down
+            // add conditional to increment only for incorrect guesses
+            game.attempts--;
+            console.log(game.attempts);
+        
+            // GAME OVER 
+            if (game.attempts == 0) {
+            game.gameOver = true;
+            alert("Yer days are numbered, Cowgirl.");
+            game.setGame();
+            }
+    
+            // WRITE TO HTML DURING GAMEPLAY
+            html_wrong_guesses.textContent = game.wrongGuesses; // change to format not as an array
+            // html_attemptsRemaining.textContent = game.attempts; 
+            game.wrongGuesses.push(game.userInput.toUpperCase());
+            console.log("wrongGuesses state: " + game.wrongGuesses);
+            // let test = game.setGame();
+            html_attemptsRemaining.textContent = game.attempts; 
         }
     },
 
@@ -108,15 +111,6 @@ let game = {
         this.runGame();
     },
 
-    //TEST FUNCTIONS
-    testFunc1: function() {
-        return "this is a test";
-    },
-
-    testFunc2: function() {
-        return 1234;
-    },
-
     // TEXT FORMATTING FUNCTIONS:
     arrayToString: function() {
         //can convert any array to a display string, both answers and guesses
@@ -125,55 +119,4 @@ let game = {
     stringToArray: function() {
         // used to set the random answer selection to an array the game can use
     },
-
-    // the parts that write to the HTML
-    answerZone: [],
-    wrongGuesses: [],
-    attempts: 13,
-
-    // GAMEPLAY VARIABLES
-    newGuess: "", //onkey event
-    userInput: "",
 }
-
-
-
-//CONTAIN INSIDE A WHILE LOOP TO CONTROL GAME START AND END TRIGGERED BY GAME STATE BOOLEAN
-
-// while (game.gameOver === false) {
-//     // run the game until GAMEOVER fires on a win or a loss
-//     // then pause and bring back a GAME RESET button
-//     document.onkeyup = function(event) {
-//         html_startButton.style = "visibility: hidden;";
-        
-//         // SETTING USER INPUT
-//         let userInput = event.key;
-//         game.newGuess = userInput
-//         console.log("newGuess set to: " + game.newGuess);
-    
-//         // ANALYZE GUESSES
-//         // writing to answerZone - update to run function to check for correct
-//         game.analyzeEntry(userInput);
-//         // Function triggers other functions to handle correct and incorrect cases and set arrays
-    
-//         // COUNTER
-//         // for each onkeyup guess that is WRONG, iterate down
-//         // add conditional to increment only for incorrect guesses
-//         game.attempts--;
-    
-    
-//         // GAME OVER 
-//         if (game.attempts == 0) {
-//             game.gameOver = true;
-//             alert("Yer days are numbered, Cowgirl.");
-//         }
-    
-//         // WRITE TO HTML DURING GAMEPLAY
-//         html_wrong_guesses.textContent = game.answerZone; // change to format not as an array
-//         // html_attemptsRemaining.textContent = game.attempts; 
-//         game.answerZone.push(userInput.toUpperCase());
-//         console.log("answerZone state: " + game.answerZone);
-//         // let test = game.setGame();
-//         html_attemptsRemaining.textContent = game.attempts; 
-//     }
-// }
