@@ -103,10 +103,8 @@ let game = {
             console.log("wrongGuesses state: " + game.wrongGuesses);
             console.log("ANSWER SPACE: " + game.answerSpace);
             console.log("ANSWER ZONE: " + game.answerZone);
-            console.log("PRINTED ANSWER ZONE: " + game.arrayToString(game.answerZone));
             html_answer_zone.textContent = game.arrayToString(game.answerZone);
-            html_wrong_guesses.textContent = game.wrongGuesses; // change to format not as an array
-            // let test = game.setGame();
+            html_wrong_guesses.textContent =  game.arrayToString(game.wrongGuesses);
             html_attemptsRemaining.textContent = game.attempts; 
         }
     },
@@ -125,10 +123,7 @@ let game = {
     // TEXT FORMATTING FUNCTIONS:
     arrayToString: function(arr) {
         //can convert any array to a display string, both answers and guesses
-        console.log("array to string fiunction - input: " + arr);
         return arr = arr.join("");
-        console.log("array to string fiunction - output: " + arr);
-        console.log(typeof arr);
     },
 
     stringToArray: function(str) {
