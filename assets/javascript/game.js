@@ -23,7 +23,6 @@ let game = {
     wrongGuesses: [], // WHERE INCORRECT ANSWERS ARE WRITTEN TO THE DOM
     attempts: 13, // ITERATES DOWNWARD TOWARDS GAME OVER TRIGGER
     answerSpace: [], // WHERE THE ARRAY VERSION OF THE COWBOY NAME IS STORED FOR REFERENCE
-    answerIndices: [], // PROBABLY BETTER AS A LOCAL VARIABLE WITHIN ANALYZEENTRY()
 
     // GAMEPLAY VARIABLES
     newGuess: "", //onkey event
@@ -42,44 +41,36 @@ let game = {
 
     analyzeEntry: function(arr, val) {
         // CREATE ARRAY OF LETTER INDICES TO CHECK AGAINST
-        // MIGHT HAVE TO KEEP THIS ARRAY LOCAL SCOPE
         let analyzeIndices = [];
         for(let i = 0; i < arr.length; i++) {
-            console.log("array reference: " + arr[i]);
             if (arr[i] === val) {
                 analyzeIndices.push(i);
             }
         };
         console.log("ANALYZE ENTRY: " + analyzeIndices);
         if (analyzeIndices.length !== 0) {
-            game.correctGuess(analyzeIndices);
-            console.log("CORRECTGUESS() FIRES");
-            console.log("UPDATED ANSWER SPACE: " + game.answerSpace)
+            game.correctGuess(analyzeIndices);   
+        } else {
+            game.incorrectGuess(val);
         }
-        // game.answerZone.forEach((game.userInput) => {
-
-        // });
         // check the user input to match within an updated answer array
         // do not permit and send message for already correct guesses
         // conditional that determines whether to run correctGuess() or incorrectGuess() with input
     },
 
     correctGuess: function(indices) {
-        for (let i = 0 ; i < indices.length ; i++ ) {
-            if (game.answerSpace[indices[i]]  !== game.userInput) {
-                game.answerSpace[indices[i]] = game.userInput;
-            } else {
-                // alert("You already guessed that letter!");
-                game.attempts ++;
-            }
-        }
         // what to do when the guess is right. write to the answeZone
         // called from analyzeEntry()
+        for (let i = 0 ; i < indices.length ; i++ ) {
+            game.answerSpace[indices[i]] = game.userInput;
+        }
     },
 
     incorrectGuess: function() {
         // what to do when the answer is wrong
         // called from analyzeEntry()
+        game.wrongGuesses.push(game.userInput.toUpperCase());
+        game.attempts --;
     },
 
     runGame: function() {
@@ -100,12 +91,6 @@ let game = {
             game.analyzeEntry(game.answerZone, game.userInput);
             // Function triggers other functions to handle correct and incorrect cases and set arrays
         
-            // COUNTER
-            // for each onkeyup guess that is WRONG, iterate down
-            // add conditional to increment only for incorrect guesses
-            game.attempts--;
-            console.log(game.attempts);
-        
             // GAME OVER 
             if (game.attempts == 0) {
             game.gameOver = true;
@@ -116,7 +101,6 @@ let game = {
             // WRITE TO HTML DURING GAMEPLAY
             
             // html_attemptsRemaining.textContent = game.attempts; 
-            game.wrongGuesses.push(game.userInput.toUpperCase());
             console.log("wrongGuesses state: " + game.wrongGuesses);
             html_answer_zone.textContent = game.answerSpace;
             html_wrong_guesses.textContent = game.wrongGuesses; // change to format not as an array
@@ -149,12 +133,15 @@ let game = {
     stringToArray: function(str) {
         // used to set the random answer selection to an array the game can use
         console.log("STRING TO ARRAY FIRE: BEFORE FUNC: " + str);
-        console.log("STRING TO ARRAY FIRE: AFTER FUNC: " + str.split(""));
+        
         game.answerZone = str.toUpperCase().split("");
         for (let i = 0 ; i < this.answerZone.length ; i++) {
             game.answerSpace.push("_");
         };
+        console.log("STRING TO ARRAY FIRE: AFTER FUNC: " + game.answerZone);
         console.log("ANSWER ZONE: " + this.answerZone.length);
         console.log("ANSWER SPACE: " + this.answerSpace.length);
     },
+
+    // BOOLEAN CHECK FUNCTIONS FOR ALREADY GUESSED LETTERS, BOTH CORRECT AND INCORRECT
 }
