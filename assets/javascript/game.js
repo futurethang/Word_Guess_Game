@@ -72,12 +72,14 @@ let game = {
     },
 
     analyzeEntry: function(arr, val) {
+        // FIRST CHECK VALIDITY OF ANSWER:
+        game.badGuess(val);
         // CREATE ARRAY OF LETTER INDICES TO CHECK AGAINST
         let analyzeIndices = [];
         for(let i = 0; i < arr.length; i++) {
             if (arr[i] === val) {
                 analyzeIndices.push(i);
-            }
+            } else {game.badGuess(val)}
         };
         console.log("ANALYZE ENTRY: " + analyzeIndices);
         if (analyzeIndices.length !== 0) {
@@ -105,7 +107,33 @@ let game = {
         game.attempts --;
     },
 
+    badGuess: function(val) {
+        // check the userinput for non-alpha entry
+        if (val.length === 1 && val.match(/[a-z]/i)) {
+            if (game.alreadyCorrect(val)) {
+                //  HTML variable write to hidden alert box
+                console.log("This is already correct: " + val);
+            } else if (game.alreadyWrong(val)) {
+                //  HTML variable write to hidden alert box
+                console.log("This is already wrong: " + val);
+            }
+        } else {console.log("That is not a valid guess: " + val)}
+        // check the unser input against alreadyCorrect and send message
+
+        // ELSE check user input against alreadyWrong and send message
+
+        return true;
+    },
+
     // BOOLEAN CHECK FUNCTIONS FOR ALREADY GUESSED LETTERS, BOTH CORRECT AND INCORRECT
+
+    alreadyCorrect: function(val) {
+        return game.answerZone.includes(val);
+    },
+
+    alreadyWrong: function(val) {
+        return game.wrongGuesses.includes(val);
+    },
 
     // CHECK WIN STATE - A FUNCTION TO RUN AT THE END OF ANALYZE TO DETERMINE A COMPLETE ANSWER, AND ALSO TRIGGER THE GAME OVER STATE.
 
@@ -148,3 +176,17 @@ let game = {
 
 
 }
+
+// REMAINING PROJECT GOALS:
+
+// TRIGGER GAME ACTIVE AND END STATES WITH FULL RESET, MAYBE EVEN A GAME WINS COUNTER WITH DEDICATED RESET
+
+// ADD A GAME WINNING MESSAGE WHEN CORRECT
+
+// IMPROVE VISUAL THEME WITH LAYOUT, COLOR, AND WESTERN THEMES
+
+// ADD GAME HEADING
+
+// ADD A HANGMAN DRAWING TO PROGRESS THE WRONG GUESSES
+
+// SOLVE FOR INELIGIBLE ENTRIES, NON-ALPHAS AND ALREADY GUESSED ALPHAS
