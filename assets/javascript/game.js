@@ -19,11 +19,11 @@ let game = {
     gameWon: false,
 
     // the parts that write to the HTML
-    answerZone: [],
-    wrongGuesses: [],
-    attempts: 13,
-    answerSpace: [],
-    answerIndices: [],
+    answerZone: [], // WHERE CORRECT ANSWERS ARE WRITTEN TO THE DOM
+    wrongGuesses: [], // WHERE INCORRECT ANSWERS ARE WRITTEN TO THE DOM
+    attempts: 13, // ITERATES DOWNWARD TOWARDS GAME OVER TRIGGER
+    answerSpace: [], // WHERE THE ARRAY VERSION OF THE COWBOY NAME IS STORED FOR REFERENCE
+    answerIndices: [], // PROBABLY BETTER AS A LOCAL VARIABLE WITHIN ANALYZEENTRY()
 
     // GAMEPLAY VARIABLES
     newGuess: "", //onkey event
@@ -41,21 +41,27 @@ let game = {
     ],
 
     analyzeEntry: function(arr, val) {
+        // CREATE ARRAY OF LETTER INDICES TO CHECK AGAINST
+        // MIGHT HAVE TO KEEP THIS ARRAY LOCAL SCOPE
+        for(let i = 0; i < arr.length; i++) {
+            console.log("array reference: " + arr[i]);
+            if (arr[i] === val) {
+                game.answerIndices.push(i);
+            } else {} // FIRE INCORRECTGUESS()
+        };
+        console.log("ANALYZE ENTRY: " + game.answerIndices);
+        game.answerZone.forEach((game.userInput) => {
+
+        });
         // check the user input to match within an updated answer array
         // do not permit and send message for already correct guesses
         // conditional that determines whether to run correctGuess() or incorrectGuess() with input
-        for(let i = 0; i < arr.length; i++) {
-            console.log("array reference: " + arr[i]);
-            if (arr[i] === val)
-                game.answerIndices.push(i);
-        };
-        console.log("ANALYZE ENTRY: " + game.answerIndices);
-
     },
 
     correctGuess: function() {
         // what to do when the guess is right. write to the answeZone
         // called from analyzeEntry()
+        game.answerSpace
     },
 
     incorrectGuess: function() {
