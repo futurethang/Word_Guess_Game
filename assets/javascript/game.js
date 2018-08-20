@@ -84,10 +84,10 @@ let game = {
                     }
             
                     // WRITE TO HTML DURING GAMEPLAY
-                    html_wrong_guesses.textContent = game.answerZone; // change to format not as an array
+                    html_wrong_guesses.textContent = game.wrongGuesses; // change to format not as an array
                     // html_attemptsRemaining.textContent = game.attempts; 
-                    game.answerZone.push(game.userInput.toUpperCase());
-                    console.log("answerZone state: " + game.answerZone);
+                    game.wrongGuesses.push(game.userInput.toUpperCase());
+                    console.log("wrongGuesses state: " + game.wrongGuesses);
                     // let test = game.setGame();
                     html_attemptsRemaining.textContent = game.attempts; 
             // }
@@ -99,6 +99,8 @@ let game = {
         let randomPick = this.answers[Math.floor(Math.random()*this.answers.length)];
         console.log(this.gameOver);
         this.stringToArray(randomPick);
+        this.attempts = 13;
+        this.wrongGuesses = [];
         this.gameOver = false;
         html_startButton.style = button_show;
         console.log(this.gameOver);
