@@ -43,25 +43,38 @@ let game = {
     analyzeEntry: function(arr, val) {
         // CREATE ARRAY OF LETTER INDICES TO CHECK AGAINST
         // MIGHT HAVE TO KEEP THIS ARRAY LOCAL SCOPE
+        let analyzeIndices = [];
         for(let i = 0; i < arr.length; i++) {
             console.log("array reference: " + arr[i]);
             if (arr[i] === val) {
-                game.answerIndices.push(i);
-            } else {} // FIRE INCORRECTGUESS()
+                analyzeIndices.push(i);
+            }
         };
-        console.log("ANALYZE ENTRY: " + game.answerIndices);
-        game.answerZone.forEach((game.userInput) => {
+        console.log("ANALYZE ENTRY: " + analyzeIndices);
+        if (analyzeIndices.length !== 0) {
+            game.correctGuess(analyzeIndices);
+            console.log("CORRECTGUESS() FIRES");
+            console.log("UPDATED ANSWER SPACE: " + game.answerSpace)
+        }
+        // game.answerZone.forEach((game.userInput) => {
 
-        });
+        // });
         // check the user input to match within an updated answer array
         // do not permit and send message for already correct guesses
         // conditional that determines whether to run correctGuess() or incorrectGuess() with input
     },
 
-    correctGuess: function() {
+    correctGuess: function(indices) {
+        for (let i = 0 ; i < indices.length ; i++ ) {
+            if (game.answerSpace[indices[i]]  !== game.userInput) {
+                game.answerSpace[indices[i]] = game.userInput;
+            } else {
+                // alert("You already guessed that letter!");
+                game.attempts ++;
+            }
+        }
         // what to do when the guess is right. write to the answeZone
         // called from analyzeEntry()
-        game.answerSpace
     },
 
     incorrectGuess: function() {
