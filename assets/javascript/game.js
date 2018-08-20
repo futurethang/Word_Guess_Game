@@ -19,13 +19,13 @@ let game = {
     gameWon: false,
 
     // the parts that write to the HTML
-    answerZone: [], // WHERE CORRECT ANSWERS ARE WRITTEN TO THE DOM
+    answerZone: [], // WHERE CORRECT ANSWERS ARE WRITTEN TO THE DOM !!! ONLY FOR DOM JUST BEFORE WRITE !!!
     wrongGuesses: [], // WHERE INCORRECT ANSWERS ARE WRITTEN TO THE DOM
     
     // GAMEPLAY VARIABLES
     userInput: "",
     attempts: 13, // ITERATES DOWNWARD TOWARDS GAME OVER TRIGGER
-    answerSpace: [], // WHERE THE ARRAY VERSION OF THE COWBOY NAME IS STORED FOR REFERENCE
+    answerSpace: [], // WHERE THE ARRAY VERSION OF THE COWBOY NAME IS STORED FOR REFERENCE !!! ONLY FOR GAME, NOT FOR DOM !!!
 
     answers: [
         "Wyatt Earp",
@@ -61,7 +61,7 @@ let game = {
         // what to do when the guess is right. write to the answeZone
         // called from analyzeEntry()
         for (let i = 0 ; i < indices.length ; i++ ) {
-            game.answerSpace[indices[i]] = game.userInput;
+            game.answerZone[indices[i]] = game.userInput;
         }
     },
 
@@ -87,7 +87,7 @@ let game = {
         
             // ANALYZE GUESSES
             // writing to answerZone - update to run function to check for correct
-            game.analyzeEntry(game.answerZone, game.userInput);
+            game.analyzeEntry(game.answerSpace, game.userInput);
             // Function triggers other functions to handle correct and incorrect cases and set arrays
         
             // GAME OVER 
@@ -101,7 +101,10 @@ let game = {
             
             // html_attemptsRemaining.textContent = game.attempts; 
             console.log("wrongGuesses state: " + game.wrongGuesses);
-            html_answer_zone.textContent = game.answerSpace;
+            console.log("ANSWER SPACE: " + game.answerSpace);
+            console.log("ANSWER ZONE: " + game.answerZone);
+            console.log("PRINTED ANSWER ZONE: " + game.arrayToString(game.answerZone));
+            html_answer_zone.textContent = game.arrayToString(game.answerZone);
             html_wrong_guesses.textContent = game.wrongGuesses; // change to format not as an array
             // let test = game.setGame();
             html_attemptsRemaining.textContent = game.attempts; 
@@ -109,34 +112,32 @@ let game = {
     },
 
     setGame: function() {
-        console.log("SETUP GAME FIRED");
         this.answerSpace = [];
         let randomPick = this.answers[Math.floor(Math.random()*this.answers.length)];
-        console.log(this.gameOver);
         this.stringToArray(randomPick);
-        html_answer_zone.textContent = game.answerSpace;
         this.attempts = 13;
         this.wrongGuesses = [];
         this.gameOver = false;
         html_startButton.style = button_show;
-        console.log(this.gameOver);
-        console.log(randomPick);
         this.runGame();
     },
 
     // TEXT FORMATTING FUNCTIONS:
     arrayToString: function(arr) {
         //can convert any array to a display string, both answers and guesses
-        arr = arr.join("");
+        console.log("array to string fiunction - input: " + arr);
+        return arr = arr.join("");
+        console.log("array to string fiunction - output: " + arr);
+        console.log(typeof arr);
     },
 
     stringToArray: function(str) {
         // used to set the random answer selection to an array the game can use
         // console.log("STRING TO ARRAY FIRE: BEFORE FUNC: " + str);
-        
-        game.answerZone = str.toUpperCase().split("");
-        for (let i = 0 ; i < this.answerZone.length ; i++) {
-            game.answerSpace.push("_");
+        console.log("string to array before: " + str);
+        game.answerSpace = str.toUpperCase().split("");
+        for (let i = 0 ; i < this.answerSpace.length ; i++) {
+            game.answerZone.push("_");
         };
 
         // console.log("STRING TO ARRAY FIRE: AFTER FUNC: " + game.answerZone);
