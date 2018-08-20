@@ -1,3 +1,7 @@
 #answer_zone, #wrong_guesses {
     font-family: 'Cutive Mono', monospace;
 }
+
+#answer_zone {
+    font-size: 5em;
+}

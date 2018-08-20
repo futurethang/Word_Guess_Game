@@ -38,6 +38,39 @@ let game = {
         "TESTING TESTING"
     ],
 
+    setGame: function() {
+        this.answerSpace = [];
+        let randomPick = this.answers[Math.floor(Math.random()*this.answers.length)];
+        this.stringToArray(randomPick);
+        this.attempts = 13;
+        this.wrongGuesses = [];
+        this.gameOver = false;
+        html_startButton.style = button_show;
+        html_answer_zone.textContent = game.arrayToString(game.answerZone);
+        html_wrong_guesses.textContent =  game.arrayToString(game.wrongGuesses);
+        this.runGame();
+    },
+
+    // TEXT FORMATTING FUNCTIONS:
+    arrayToString: function(arr) {
+        //can convert any array to a display string, both answers and guesses
+        return arr = arr.join("");
+    },
+
+    stringToArray: function(str) {
+        // used to set the random answer selection to an array the game can use
+        // console.log("STRING TO ARRAY FIRE: BEFORE FUNC: " + str);
+        console.log("string to array before: " + str);
+        game.answerSpace = str.toUpperCase().split("");
+        for (let i = 0 ; i < this.answerSpace.length ; i++) {
+            game.answerZone.push("_");
+        };
+
+        // console.log("STRING TO ARRAY FIRE: AFTER FUNC: " + game.answerZone);
+        // console.log("ANSWER ZONE: " + this.answerZone.length);
+        // console.log("ANSWER SPACE: " + this.answerSpace.length);
+    },
+
     analyzeEntry: function(arr, val) {
         // CREATE ARRAY OF LETTER INDICES TO CHECK AGAINST
         let analyzeIndices = [];
@@ -71,6 +104,10 @@ let game = {
         game.wrongGuesses.push(game.userInput.toUpperCase());
         game.attempts --;
     },
+
+    // BOOLEAN CHECK FUNCTIONS FOR ALREADY GUESSED LETTERS, BOTH CORRECT AND INCORRECT
+
+    // CHECK WIN STATE - A FUNCTION TO RUN AT THE END OF ANALYZE TO DETERMINE A COMPLETE ANSWER, AND ALSO TRIGGER THE GAME OVER STATE.
 
     runGame: function() {
         html_startButton.style = button_hide;
@@ -109,38 +146,5 @@ let game = {
         }
     },
 
-    setGame: function() {
-        this.answerSpace = [];
-        let randomPick = this.answers[Math.floor(Math.random()*this.answers.length)];
-        this.stringToArray(randomPick);
-        this.attempts = 13;
-        this.wrongGuesses = [];
-        this.gameOver = false;
-        html_startButton.style = button_show;
-        this.runGame();
-    },
 
-    // TEXT FORMATTING FUNCTIONS:
-    arrayToString: function(arr) {
-        //can convert any array to a display string, both answers and guesses
-        return arr = arr.join("");
-    },
-
-    stringToArray: function(str) {
-        // used to set the random answer selection to an array the game can use
-        // console.log("STRING TO ARRAY FIRE: BEFORE FUNC: " + str);
-        console.log("string to array before: " + str);
-        game.answerSpace = str.toUpperCase().split("");
-        for (let i = 0 ; i < this.answerSpace.length ; i++) {
-            game.answerZone.push("_");
-        };
-
-        // console.log("STRING TO ARRAY FIRE: AFTER FUNC: " + game.answerZone);
-        // console.log("ANSWER ZONE: " + this.answerZone.length);
-        // console.log("ANSWER SPACE: " + this.answerSpace.length);
-    },
-
-    // BOOLEAN CHECK FUNCTIONS FOR ALREADY GUESSED LETTERS, BOTH CORRECT AND INCORRECT
-
-    // CHECK WIN STATE - A FUNCTION TO RUN AT THE END OF ANALYZE TO DETERMINE A COMPLETE ANSWER, AND ALSO TRIGGER THE GAME OVER STATE.
 }
