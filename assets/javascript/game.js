@@ -73,20 +73,24 @@ let game = {
 
     analyzeEntry: function(arr, val) {
         // FIRST CHECK VALIDITY OF ANSWER:
-        game.badGuess(val);
-        // CREATE ARRAY OF LETTER INDICES TO CHECK AGAINST
-        let analyzeIndices = [];
-        for(let i = 0; i < arr.length; i++) {
-            if (arr[i] === val) {
-                analyzeIndices.push(i);
-            } else {game.badGuess(val)}
-        };
-        console.log("ANALYZE ENTRY: " + analyzeIndices);
-        if (analyzeIndices.length !== 0) {
-            game.correctGuess(analyzeIndices);   
-        } else {
-            game.incorrectGuess(val);
-        }
+        console.log("BADGUESS RETURN: " + game.badGuess(val));
+        if (game.badGuess(val)) {
+            // CREATE ARRAY OF LETTER INDICES TO CHECK AGAINST
+            let analyzeIndices = [];
+            for(let i = 0; i < arr.length; i++) {
+                if (arr[i] === val) {
+                    analyzeIndices.push(i);
+                }
+            };
+            console.log("ANALYZE ENTRY: " + analyzeIndices);
+            if (analyzeIndices.length !== 0) {
+                game.correctGuess(analyzeIndices);   
+            } else {
+                game.incorrectGuess(val);
+            }
+        } else alert("That is not a valid guess");
+        
+        
         // check the user input to match within an updated answer array
         // do not permit and send message for already correct guesses
         // conditional that determines whether to run correctGuess() or incorrectGuess() with input
@@ -95,34 +99,49 @@ let game = {
     correctGuess: function(indices) {
         // what to do when the guess is right. write to the answeZone
         // called from analyzeEntry()
-        for (let i = 0 ; i < indices.length ; i++ ) {
-            game.answerZone[indices[i]] = game.userInput;
+        if (game.alreadyCorrect(game.userInput)) {
+            //  HTML variable write to hidden alert box
+            alert("This is already correct: " + game.userInput);
+        } else {
+            for (let i = 0 ; i < indices.length ; i++ ) {
+                game.answerZone[indices[i]] = game.userInput;
+            }
         }
     },
 
-    incorrectGuess: function() {
+    incorrectGuess: function(val) {
         // what to do when the answer is wrong
         // called from analyzeEntry()
-        game.wrongGuesses.push(game.userInput.toUpperCase());
-        game.attempts --;
+        if (game.alreadyWrong(val)) {
+            //  HTML variable write to hidden alert box
+            alert("This is already wrong: " + val);
+        } else {
+            game.wrongGuesses.push(val.toUpperCase());
+            game.attempts --;
+        }
     },
 
     badGuess: function(val) {
-        // check the userinput for non-alpha entry
+        // check the userinput for non-alpha entry !ONLY!
         if (val.length === 1 && val.match(/[a-z]/i)) {
-            if (game.alreadyCorrect(val)) {
-                //  HTML variable write to hidden alert box
-                console.log("This is already correct: " + val);
-            } else if (game.alreadyWrong(val)) {
-                //  HTML variable write to hidden alert box
-                console.log("This is already wrong: " + val);
-            }
-        } else {console.log("That is not a valid guess: " + val)}
-        // check the unser input against alreadyCorrect and send message
-
-        // ELSE check user input against alreadyWrong and send message
-
-        return true;
+            return true;
+        } else {return false;}
+        // if (val.length === 1 && val.match(/[a-z]/i)) {
+        //     if (game.alreadyCorrect(val)) {
+        //         //  HTML variable write to hidden alert box
+        //         alert("This is already correct: " + val);
+        //         return false;
+        //     } else if (game.alreadyWrong(val)) {
+        //         //  HTML variable write to hidden alert box
+        //         alert("This is already wrong: " + val);
+        //         return false;
+        //     }
+        // } else {
+        //     console.log("That is not a valid guess: " + val)
+        //         //  HTML variable write to hidden alert box
+        //     return false;
+        // }
+        // return true;
     },
 
     // BOOLEAN CHECK FUNCTIONS FOR ALREADY GUESSED LETTERS, BOTH CORRECT AND INCORRECT
