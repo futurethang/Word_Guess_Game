@@ -1,5 +1,3 @@
-alert("javascrip loaded");
-
 let html_answer_zone = document.getElementById("answer_zone");
 let html_wrong_guesses = document.getElementById("wrong_guesses");
 let html_attemptsRemaining = document.getElementById("attempts_remaining");
@@ -24,6 +22,7 @@ let game = {
     answerZone: [],
     wrongGuesses: [],
     attempts: 13,
+    answerSpace: [],
 
     // GAMEPLAY VARIABLES
     newGuess: "", //onkey event
@@ -118,10 +117,13 @@ let game = {
 
     stringToArray: function(str) {
         // used to set the random answer selection to an array the game can use
-        
         console.log("STRING TO ARRAY FIRE: BEFORE FUNC: " + str);
         console.log("STRING TO ARRAY FIRE: AFTER FUNC: " + str.split(""));
         game.answerZone = str.toUpperCase().split("");
         console.log("ANSWER ZONE: " + this.answerZone);
+        console.log("ANSWER SPACE: " + this.answerSpace);
+        for (let i = 0 ; i < this.answerZone.length ; i++) {
+            console.log(i);
+        };
     },
 }
