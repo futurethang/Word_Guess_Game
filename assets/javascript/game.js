@@ -23,6 +23,7 @@ let game = {
     wrongGuesses: [],
     attempts: 13,
     answerSpace: [],
+    answerIndices: [],
 
     // GAMEPLAY VARIABLES
     newGuess: "", //onkey event
@@ -39,10 +40,17 @@ let game = {
         "TESTING TESTING"
     ],
 
-    analyzeEntry: function(input) {
+    analyzeEntry: function(arr, val) {
         // check the user input to match within an updated answer array
         // do not permit and send message for already correct guesses
         // conditional that determines whether to run correctGuess() or incorrectGuess() with input
+        for(let i = 0; i < arr.length; i++) {
+            console.log("array reference: " + arr[i]);
+            if (arr[i] === val)
+                game.answerIndices.push(i);
+        };
+        console.log("ANALYZE ENTRY: " + game.answerIndices);
+
     },
 
     correctGuess: function() {
@@ -65,12 +73,12 @@ let game = {
         document.onkeyup = function(event) {
             
             // SETTING USER INPUT
-            game.userInput = event.key;
+            game.userInput = event.key.toUpperCase();
             console.log("newGuess set to: " + game.userInput);
         
             // ANALYZE GUESSES
             // writing to answerZone - update to run function to check for correct
-            game.analyzeEntry(game.userInput);
+            game.analyzeEntry(game.answerZone, game.userInput);
             // Function triggers other functions to handle correct and incorrect cases and set arrays
         
             // COUNTER
@@ -87,10 +95,12 @@ let game = {
             }
     
             // WRITE TO HTML DURING GAMEPLAY
-            html_wrong_guesses.textContent = game.wrongGuesses; // change to format not as an array
+            
             // html_attemptsRemaining.textContent = game.attempts; 
             game.wrongGuesses.push(game.userInput.toUpperCase());
             console.log("wrongGuesses state: " + game.wrongGuesses);
+            html_answer_zone.textContent = game.answerSpace;
+            html_wrong_guesses.textContent = game.wrongGuesses; // change to format not as an array
             // let test = game.setGame();
             html_attemptsRemaining.textContent = game.attempts; 
         }
@@ -98,9 +108,11 @@ let game = {
 
     setGame: function() {
         console.log("SETUP GAME FIRED");
+        this.answerSpace = [];
         let randomPick = this.answers[Math.floor(Math.random()*this.answers.length)];
         console.log(this.gameOver);
         this.stringToArray(randomPick);
+        html_answer_zone.textContent = game.answerSpace;
         this.attempts = 13;
         this.wrongGuesses = [];
         this.gameOver = false;
@@ -120,10 +132,10 @@ let game = {
         console.log("STRING TO ARRAY FIRE: BEFORE FUNC: " + str);
         console.log("STRING TO ARRAY FIRE: AFTER FUNC: " + str.split(""));
         game.answerZone = str.toUpperCase().split("");
-        console.log("ANSWER ZONE: " + this.answerZone);
-        console.log("ANSWER SPACE: " + this.answerSpace);
         for (let i = 0 ; i < this.answerZone.length ; i++) {
-            console.log(i);
+            game.answerSpace.push("_");
         };
+        console.log("ANSWER ZONE: " + this.answerZone.length);
+        console.log("ANSWER SPACE: " + this.answerSpace.length);
     },
 }
