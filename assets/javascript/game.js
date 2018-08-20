@@ -1,9 +1,10 @@
 let html_answer_zone = document.getElementById("answer_zone");
 let html_wrong_guesses = document.getElementById("wrong_guesses");
+let html_bad_guess_alert = document.getElementById("bad_guess_alert");
 let html_attemptsRemaining = document.getElementById("attempts_remaining");
 let html_startButton = document.getElementById("game_start");
-let button_show = "visibility: visible;";
-let button_hide = "visibility: hidden;";
+let show = "visibility: visible;";
+let hide = "visibility: hidden;";
 let userInput;
 
 // set a start game button, that might prevent the META issue.
@@ -23,7 +24,7 @@ let game = {
     wrongGuesses: [], // WHERE INCORRECT ANSWERS ARE WRITTEN TO THE DOM
     
     // GAMEPLAY VARIABLES
-    userInput: "",
+    userInput: "", // PLACEHOLDER FOR OBJECT-WIDE AVAILABLE CURRENT ONKEY ENTRY
     attempts: 13, // ITERATES DOWNWARD TOWARDS GAME OVER TRIGGER
     answerSpace: [], // WHERE THE ARRAY VERSION OF THE COWBOY NAME IS STORED FOR REFERENCE !!! ONLY FOR GAME, NOT FOR DOM !!!
 
@@ -39,13 +40,13 @@ let game = {
     ],
 
     setGame: function() {
-        this.answerSpace = [];
         let randomPick = this.answers[Math.floor(Math.random()*this.answers.length)];
+        this.answerSpace = [];
         this.stringToArray(randomPick);
         this.attempts = 13;
         this.wrongGuesses = [];
         this.gameOver = false;
-        html_startButton.style = button_show;
+        html_startButton.style = show;
         html_answer_zone.textContent = game.arrayToString(game.answerZone);
         html_wrong_guesses.textContent =  game.arrayToString(game.wrongGuesses);
         this.runGame();
@@ -72,9 +73,7 @@ let game = {
     },
 
     analyzeEntry: function(arr, val) {
-        // FIRST CHECK VALIDITY OF ANSWER:
-        console.log("BADGUESS RETURN: " + game.badGuess(val));
-        if (game.badGuess(val)) {
+        if (game.badGuess(val)) { // FIRST CHECK VALIDITY OF ANSWER
             // CREATE ARRAY OF LETTER INDICES TO CHECK AGAINST
             let analyzeIndices = [];
             for(let i = 0; i < arr.length; i++) {
@@ -88,7 +87,10 @@ let game = {
             } else {
                 game.incorrectGuess(val);
             }
-        } else alert("That is not a valid guess");
+        } else {
+            html_bad_guess_alert.textContent = "That ain't even a letter, dude!";
+            html_bad_guess_alert.style = show;
+        }
         
         
         // check the user input to match within an updated answer array
@@ -100,8 +102,8 @@ let game = {
         // what to do when the guess is right. write to the answeZone
         // called from analyzeEntry()
         if (game.alreadyCorrect(game.userInput)) {
-            //  HTML variable write to hidden alert box
-            alert("This is already correct: " + game.userInput);
+            html_bad_guess_alert.textContent = "Ya got that one already, pardner.";
+            html_bad_guess_alert.style = show;
         } else {
             for (let i = 0 ; i < indices.length ; i++ ) {
                 game.answerZone[indices[i]] = game.userInput;
@@ -114,7 +116,8 @@ let game = {
         // called from analyzeEntry()
         if (game.alreadyWrong(val)) {
             //  HTML variable write to hidden alert box
-            alert("This is already wrong: " + val);
+            html_bad_guess_alert.textContent = "Wrong again, lil' doggie.";
+            html_bad_guess_alert.style = show;
         } else {
             game.wrongGuesses.push(val.toUpperCase());
             game.attempts --;
@@ -126,22 +129,6 @@ let game = {
         if (val.length === 1 && val.match(/[a-z]/i)) {
             return true;
         } else {return false;}
-        // if (val.length === 1 && val.match(/[a-z]/i)) {
-        //     if (game.alreadyCorrect(val)) {
-        //         //  HTML variable write to hidden alert box
-        //         alert("This is already correct: " + val);
-        //         return false;
-        //     } else if (game.alreadyWrong(val)) {
-        //         //  HTML variable write to hidden alert box
-        //         alert("This is already wrong: " + val);
-        //         return false;
-        //     }
-        // } else {
-        //     console.log("That is not a valid guess: " + val)
-        //         //  HTML variable write to hidden alert box
-        //     return false;
-        // }
-        // return true;
     },
 
     // BOOLEAN CHECK FUNCTIONS FOR ALREADY GUESSED LETTERS, BOTH CORRECT AND INCORRECT
@@ -156,40 +143,42 @@ let game = {
 
     // CHECK WIN STATE - A FUNCTION TO RUN AT THE END OF ANALYZE TO DETERMINE A COMPLETE ANSWER, AND ALSO TRIGGER THE GAME OVER STATE.
 
+
+
+    //--------------------------------------------------------
+
+    // GAME APPLICATION:
+
     runGame: function() {
-        html_startButton.style = button_hide;
-        console.log(this.gameOver);
-        console.log("TESTING RUNGAME FIRE");
-        
-        // this.gameOver = true;
+        html_startButton.style = hide;
         
         document.onkeyup = function(event) {
             
             // SETTING USER INPUT
             game.userInput = event.key.toUpperCase();
             console.log("userInput set to: " + game.userInput);
-        
+            
+            // CLEAR ANY ERROR MESSAGES
+            html_bad_guess_alert.style = hide;
+
             // ANALYZE GUESSES
-            // writing to answerZone - update to run function to check for correct
             game.analyzeEntry(game.answerSpace, game.userInput);
-            // Function triggers other functions to handle correct and incorrect cases and set arrays
         
+            // WRITE TO HTML DURING GAMEPLAY
+            
+            // console.log("wrongGuesses state: " + game.wrongGuesses);
+            // console.log("ANSWER SPACE: " + game.answerSpace);
+            // console.log("ANSWER ZONE: " + game.answerZone);
+            html_answer_zone.textContent = game.arrayToString(game.answerZone);
+            html_wrong_guesses.textContent =  game.arrayToString(game.wrongGuesses);
+            html_attemptsRemaining.textContent = game.attempts;
+            
             // GAME OVER 
             if (game.attempts == 0) {
             game.gameOver = true;
             alert("Yer days are numbered, Cowgirl.");
-            game.setGame();
+            game.gameOverState();
             }
-    
-            // WRITE TO HTML DURING GAMEPLAY
-            
-            // html_attemptsRemaining.textContent = game.attempts; 
-            console.log("wrongGuesses state: " + game.wrongGuesses);
-            console.log("ANSWER SPACE: " + game.answerSpace);
-            console.log("ANSWER ZONE: " + game.answerZone);
-            html_answer_zone.textContent = game.arrayToString(game.answerZone);
-            html_wrong_guesses.textContent =  game.arrayToString(game.wrongGuesses);
-            html_attemptsRemaining.textContent = game.attempts; 
         }
     },
 
@@ -207,5 +196,3 @@ let game = {
 // ADD GAME HEADING
 
 // ADD A HANGMAN DRAWING TO PROGRESS THE WRONG GUESSES
-
-// SOLVE FOR INELIGIBLE ENTRIES, NON-ALPHAS AND ALREADY GUESSED ALPHAS
