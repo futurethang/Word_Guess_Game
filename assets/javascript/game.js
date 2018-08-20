@@ -40,10 +40,12 @@ let game = {
     ],
 
     setGame: function() {
+
         let randomPick = this.answers[Math.floor(Math.random()*this.answers.length)];
         this.answerSpace = [];
+        this.answerZone = [];
         this.stringToArray(randomPick);
-        this.attempts = 13;
+        this.attempts = 9;
         this.wrongGuesses = [];
         this.gameOver = false;
         html_startButton.style = show;
@@ -62,7 +64,8 @@ let game = {
         // used to set the random answer selection to an array the game can use
         // console.log("STRING TO ARRAY FIRE: BEFORE FUNC: " + str);
         console.log("string to array before: " + str);
-        game.answerSpace = str.toUpperCase().split("");
+        game.answerSpace = str.toUpperCase().replace(" ", "_").split("");
+        console.log(game.answerSpace);
         for (let i = 0 ; i < this.answerSpace.length ; i++) {
             game.answerZone.push("_");
         };
@@ -143,7 +146,24 @@ let game = {
 
     // CHECK WIN STATE - A FUNCTION TO RUN AT THE END OF ANALYZE TO DETERMINE A COMPLETE ANSWER, AND ALSO TRIGGER THE GAME OVER STATE.
 
+    gameOverState: function() {
+        // IS THE GUESS COUNTER DOWN TO ZERO? ELSE IF PERFECT MATCH? SEND APPROPRIATE FUNCTION
+        if (game.attempts == 0) {
+            game.failState();
+        } else if (game.answerSpace.join(",") == game.answerZone.join(",")) {
+            game.successState();
+        }
+    },
 
+    failState: function() {
+        alert("failure");
+        html_startButton.style = show;
+    },
+
+    successState: function() {
+        alert("success");
+        html_startButton.style = show;
+    },
 
     //--------------------------------------------------------
 
@@ -167,23 +187,18 @@ let game = {
             // WRITE TO HTML DURING GAMEPLAY
             
             // console.log("wrongGuesses state: " + game.wrongGuesses);
-            // console.log("ANSWER SPACE: " + game.answerSpace);
-            // console.log("ANSWER ZONE: " + game.answerZone);
+            console.log("ANSWER SPACE: " + game.answerSpace);
+            console.log("ANSWER ZONE: " + game.answerZone);
             html_answer_zone.textContent = game.arrayToString(game.answerZone);
             html_wrong_guesses.textContent =  game.arrayToString(game.wrongGuesses);
             html_attemptsRemaining.textContent = game.attempts;
             
             // GAME OVER 
-            if (game.attempts == 0) {
-            game.gameOver = true;
-            alert("Yer days are numbered, Cowgirl.");
             game.gameOverState();
-            }
+            
         }
     },
-
-
-}
+};
 
 // REMAINING PROJECT GOALS:
 
