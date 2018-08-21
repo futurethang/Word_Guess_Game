@@ -5,3 +5,51 @@
 #answer_zone {
     font-size: 5em;
 }
+
+body {
+    background-image: url(../images/Old-Paper-Texture-2.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+    object-fit: contain;
+    background-color: #000;    
+    color: rgb(104, 59, 29,) !important;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.display-3 {
+    font-family: 'Ewert', cursive;
+    font-size: 4em;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: rgb(104, 59, 29,);
+}
+
+.shots, .misses, .alert {
+    width: 60%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    color: rgb(104, 59, 29,);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: rgb(104, 59, 29,) !important;
+}
