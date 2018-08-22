@@ -7,6 +7,22 @@ let show = "visibility: visible;";
 let hide = "visibility: hidden;";
 let userInput;
 
+
+// AUDIO VARIABLES
+let ricochet1 = 'assets/sounds/ric_1.m4a';
+let ricochet2 = "assets/sounds/ric_2.m4a";
+let ricochet3 = "assets/sounds/ric_3.m4a";
+let ricochet4 = "assets/sounds/ric_4.m4a";
+let horse = "assets/sounds/horse1.m4a";
+let noWay = "assets/sounds/no_way_dude.m4a";
+let nope = "assets/sounds/nope.m4a";
+let somElse = "assets/sounds/something_else.m4a";
+let yeehaw = "assets/sounds/yeehaw.m4a";
+
+let ricochets = [ricochet1, ricochet2, ricochet3, ricochet4];
+let wrongAgainSound = [horse, noWay, nope];
+let correctSound = [somElse, yeehaw];
+
 // set a start game button, that might prevent the META issue.
 document.getElementById("game_start").onclick = function() {
     game.setGame(); // this initializes the new game
@@ -79,7 +95,10 @@ let game = {
             };
             console.log("ANALYZE ENTRY: " + analyzeIndices);
             if (analyzeIndices.length !== 0) {
-                game.correctGuess(analyzeIndices);   
+                game.correctGuess(analyzeIndices);
+                let sound = correctSound[(Math.floor(Math.random()*correctSound.length))];
+                console.log("SOUNDS: " + sound); 
+                new Audio(sound).play();   
             } else {
                 game.incorrectGuess(val);
             }
@@ -108,9 +127,15 @@ let game = {
         if (game.alreadyWrong(val)) {
             html_bad_guess_alert.textContent = "Wrong again, lil' doggie.";
             html_bad_guess_alert.style = show;
+            let sound = wrongAgainSound[(Math.floor(Math.random()*wrongAgainSound.length))];
+            console.log("SOUNDS: " + sound); 
+            new Audio(sound).play();
         } else {
             game.wrongGuesses.push(val.toUpperCase());
             game.attempts --;
+            let sound = ricochets[(Math.floor(Math.random()*ricochets.length))];
+            console.log("SOUNDS: " + sound); 
+            new Audio(sound).play();
         }
     },
 
@@ -190,8 +215,10 @@ let game = {
 
 // ADD A GAME WINNING MESSAGE WHEN CORRECT
 
-// IMPROVE VISUAL THEME WITH LAYOUT, COLOR, AND WESTERN THEMES
-
-// ADD GAME HEADING
-
 // ADD A HANGMAN DRAWING TO PROGRESS THE WRONG GUESSES
+
+// CHANGE ATTEMPT COUNTER TO BULLET HOLES
+
+// TRIGGER RICOCHET AUDIO FOR MISSES, YEEHAWS AND HORSE WHINNEYS AND SUCH FOR CORRECT GUESSES
+
+// EXTRA MILE, RECORD VOICE AUFIO FOR ALERTS AND ERROR MESSAGES
