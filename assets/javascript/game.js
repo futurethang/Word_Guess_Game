@@ -3,6 +3,7 @@ let html_wrong_guesses = document.getElementById("wrong_guesses");
 let html_bad_guess_alert = document.getElementById("bad_guess_alert");
 let html_attemptsRemaining = document.getElementById("attempts_remaining");
 let html_startButton = document.getElementById("game_start");
+let html_sub_header = document.getElementById("sub_header");
 let show = "visibility: visible;";
 let hide = "visibility: hidden;";
 let userInput;
@@ -59,6 +60,7 @@ let game = {
         this.attempts = 9;
         this.wrongGuesses = [];
         html_startButton.style = show;
+        html_sub_header.style = show;
         html_answer_zone.textContent = game.arrayToString(game.answerZone);
         html_wrong_guesses.textContent =  game.arrayToString(game.wrongGuesses);
         this.runGame();
@@ -182,7 +184,7 @@ let game = {
 
     runGame: function() {
         html_startButton.style = hide;
-        
+        html_sub_header.style = hide;
         document.onkeyup = function(event) {
             
             // SETTING USER INPUT

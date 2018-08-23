@@ -6,6 +6,22 @@
     font-size: 5em;
 }
 
+#sub_header {
+    margin-top: -20px;
+    margin-bottom: 20px;
+    font-family: 'Cutive Mono', monospace;
+}
+
+#game_start {
+    font-family: 'Homemade Apple', cursive;
+    padding-top: 10px;
+    color: rgb(58, 27, 7) !important;
+    background-color: rgba(0, 0, 0, 0);
+    border-color: rgb(58, 27, 7) !important;
+    border-width: 3px;
+    transform: rotate(-4deg);
+}
+
 body {
     background-image: url(../images/Old-Paper-Texture-2.png);
     background-repeat: no-repeat;
@@ -13,7 +29,7 @@ body {
     background-position: center; 
     object-fit: contain;
     background-color: #000;    
-    color: rgb(104, 59, 29) !important;
+    color: rgb(58, 27, 7) !important;
 }
 
 .container {
@@ -36,7 +52,7 @@ header {
     font-size: 4em;
     margin-top: 20px;
     margin-bottom: 40px;
-    color: rgb(104, 59, 29);
+    color: rgb(58, 27, 7);
 }
 
 .shots, .misses, .alert {
@@ -47,9 +63,9 @@ header {
     justify-content: center;
     align-items: center;
     margin-top: 30px;
-    color: rgb(104, 59, 29);
+    color: rgb(58, 27, 7);
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: rgb(104, 59, 29) !important;
+    color: rgb(58, 27, 7) !important;
 }
