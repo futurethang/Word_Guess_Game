@@ -48,6 +48,7 @@ let noWay = "assets/sounds/no_way_dude.m4a";
 let nope = "assets/sounds/nope.m4a";
 let somElse = "assets/sounds/something_else.m4a";
 let yeehaw = "assets/sounds/yeehaw.m4a";
+let huckleberry = "assets/sounds/huckleberry.m4a";
 
 let ricochets = [ricochet1, ricochet2, ricochet3, ricochet4];
 let wrongAgainSound = [horse, noWay, nope];
@@ -203,6 +204,7 @@ let game = {
 
     successState: function() {
         // alert("success");
+        new Audio(huckleberry).play();
         html_win_modal.style.display = "block";
         html_startButton.style = show;
     },
