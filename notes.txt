@@ -56,3 +56,23 @@ Game reset function
 Convert an answer string to an answer array
 
 Somehow iterate over the answer and guess arrays to generate HTML elements so the placeholder responds and displays answers of different lengths
+
+
+-----------------
+
+
+
+WRAPUP TASKS:
+
+-- Trim audio files to only misses and wins/losses
+
+-- write window display for game-end
+
+-- optional: fix sizing layout for bg image and text
+
+-- add to portfolio page
+
+-- write out a README that describes my approach, process and challenges. 
+
+-- Run code through linter and cleanup
+
