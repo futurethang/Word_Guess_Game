@@ -8,38 +8,9 @@ let show = "visibility: visible;";
 let hide = "visibility: hidden;";
 let userInput;
 
-// MODAL VARIABLES
-
-// Get the modal
-var html_win_modal = document.getElementById('winModal');
-var html_lose_modal = document.getElementById('loseModal');
-// Get the button that opens the modal
-// var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-// btn.onclick = function() {
-//     modal.style.display = "block";
-// }
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    html_win_modal.style.display = "none";
-    html_lose_modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == html_lose_modal || event.target == html_win_modal) {
-        html_win_modal.style.display = "none";
-        html_lose_modal.style.display = "none";
-    }
-}
 
 // AUDIO VARIABLES
-let ricochet1 = 'assets/sounds/ric_1.m4a';
+let ricochet1 = 'assets/sounds/ric_1.mp3';
 let ricochet2 = "assets/sounds/ric_2.m4a";
 let ricochet3 = "assets/sounds/ric_3.m4a";
 let ricochet4 = "assets/sounds/ric_4.m4a";
@@ -197,15 +168,13 @@ let game = {
     },
 
     failState: function() {
-        // alert("failure");
-        html_lose_modal.style.display = "block";
+        alert("Out of luck, Cowgirl.");
         html_startButton.style = show;
     },
 
     successState: function() {
-        // alert("success");
         new Audio(huckleberry).play();
-        html_win_modal.style.display = "block";
+        alert("You did it!");
         html_startButton.style = show;
     },
 
