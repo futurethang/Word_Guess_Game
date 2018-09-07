@@ -18,4 +18,6 @@ CHALLENGES:
 As a learning challenge, this project helped me understand and practice a number of Javascript skills:
 * Holding many of the game parameters and functionality within an object
 * Functional programming for various elements of preparing and manipulating variable and game conditions
-* 
+* Manipulating arrays to provide target answers, user guesses, and writing to the DOM
+* DOM manipulation for accurate and easy to use interface
+* Inserting audio response elements
