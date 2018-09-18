@@ -1,5 +1,5 @@
 # Word_Guess_Game
-A hangman-style game that runs in the browser, using HTML, CSS, and Javascript [Play the Word Guess Game](https://futurethang.github.io/Word_Guess_Game/#)
+A hangman-style game that runs in the browser, using HTML, CSS, and Javascript. [Play the Word Guess Game](https://futurethang.github.io/Word_Guess_Game/#)
 
 
 ![word_guess_game](https://user-images.githubusercontent.com/17099707/45703223-7de44d00-bb28-11e8-840a-9a9335caeb8d.png)
